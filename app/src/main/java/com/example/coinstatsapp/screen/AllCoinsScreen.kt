@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.R
 import com.example.coinstatsapp.adapter.AllCoinsAdapter
 
-class AllCoinsScreen @JvmOverloads constructor(
+open class AllCoinsScreen @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 

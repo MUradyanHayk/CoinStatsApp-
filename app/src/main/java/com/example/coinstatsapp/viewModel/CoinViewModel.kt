@@ -10,7 +10,7 @@ import com.example.coinstatsapp.constants.Constants
 import com.example.coinstatsapp.model.CoinModel
 import io.realm.Realm
 
-class AllCoinsViewModel : ViewModel() {
+class CoinViewModel : ViewModel() {
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
 
@@ -19,6 +19,7 @@ class AllCoinsViewModel : ViewModel() {
         realmDB = Realm.getDefaultInstance()
         requestQueue = Volley.newRequestQueue(context)
 //        realmDB?.where(CoinModel::class.java)?.findAll()?.deleteAllFromRealm()
+//        realmDB?.executeTransaction { realm -> realm.deleteAll() }
         parseJson()
     }
 

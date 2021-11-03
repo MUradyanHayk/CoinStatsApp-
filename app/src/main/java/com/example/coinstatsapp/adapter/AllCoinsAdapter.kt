@@ -8,8 +8,14 @@ import com.example.coinstatsapp.model.CoinModel
 import com.example.coinstatsapp.viewHolder.ViewHolder
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
+import java.lang.ref.WeakReference
 
-class AllCoinsAdapter(var context: Context, var list: RealmResults<CoinModel>?) : RecyclerView.Adapter<ViewHolder>(),
+interface AllCoinsAdapterDelegate {
+    fun onFavoriteItemClick()
+}
+
+class AllCoinsAdapter(var context: Context, var delegate: WeakReference<AllCoinsAdapterDelegate>?, var list: RealmResults<CoinModel>?) :
+    RecyclerView.Adapter<ViewHolder>(),
     RealmChangeListener<RealmResults<CoinModel>> {
 
     init {
@@ -25,6 +31,9 @@ class AllCoinsAdapter(var context: Context, var list: RealmResults<CoinModel>?) 
         val itemView = holder.itemView as CoinItem
         list?.get(position)?.let {
             itemView.configure(it)
+        }
+        itemView.setOnClickListener {
+            delegate?.get()?.onFavoriteItemClick()
         }
     }
 
