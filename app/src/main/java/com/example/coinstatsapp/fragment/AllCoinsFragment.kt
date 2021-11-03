@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.coinstatsapp.adapter.AllCoinsAdapter
+import com.example.coinstatsapp.model.CoinModel
 import com.example.coinstatsapp.screen.AllCoinsScreen
 import com.example.coinstatsapp.viewModel.AllCoinsViewModel
 
@@ -21,9 +23,16 @@ class AllCoinsFragment : Fragment() {
         return screen
     }
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(AllCoinsViewModel::class.java)
+        viewModel?.configure(requireContext())
+        screen?.createRecyclerView(AllCoinsAdapter(requireContext(), viewModel?.realmDB?.where(CoinModel::class.java)?.findAll()))
     }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        viewModel = ViewModelProvider(this).get(AllCoinsViewModel::class.java)
+//        viewModel?.configure(context)
+//        screen?.createRecyclerView()
+//    }
 }

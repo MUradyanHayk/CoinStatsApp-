@@ -25,5 +25,6 @@ class FavoriteCoinsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel = ViewModelProvider(this).get(FavoriteCoinsViewModel::class.java)
+//        viewModel?.configure(context)
     }
 }

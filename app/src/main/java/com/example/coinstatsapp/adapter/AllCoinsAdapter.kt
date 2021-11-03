@@ -4,12 +4,17 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.item.CoinItem
+import com.example.coinstatsapp.model.CoinModel
 import com.example.coinstatsapp.viewHolder.ViewHolder
+import io.realm.RealmChangeListener
+import io.realm.RealmResults
 
-class AllCoinsAdapter(var context: Context, var list: MutableList<String>) : RecyclerView.Adapter<ViewHolder>() {
+class AllCoinsAdapter(var context: Context, var list: RealmResults<CoinModel>?) : RecyclerView.Adapter<ViewHolder>(),
+    RealmChangeListener<RealmResults<CoinModel>> {
 
-//    private var list: MutableList<String>? = null
-//    private var context: MutableList<String>? = null
+    init {
+        this.list?.addChangeListener(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val item = CoinItem(context)
@@ -18,10 +23,16 @@ class AllCoinsAdapter(var context: Context, var list: MutableList<String>) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemView = holder.itemView as CoinItem
-
+        list?.get(position)?.let {
+            itemView.configure(it)
+        }
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list?.size ?: 0
+    }
+
+    override fun onChange(t: RealmResults<CoinModel>) {
+        notifyDataSetChanged()
     }
 }

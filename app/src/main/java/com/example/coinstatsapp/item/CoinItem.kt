@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.coinstatsapp.R
 import com.example.coinstatsapp.model.CoinModel
 import com.example.newprojmvvm.extensions.dp
@@ -55,8 +56,9 @@ class CoinItem @JvmOverloads constructor(
     }
 
     fun configure(model: CoinModel) {
-        titleTextView?.text = model.title
-//        Glide
-//        logoImageView?.text = model.title
+        titleTextView?.text = model.name
+        logoImageView?.let {
+            Glide.with(context).load(model.imgURL).into(it)
+        }
     }
 }
