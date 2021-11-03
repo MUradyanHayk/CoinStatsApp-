@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.coinstatsapp.adapter.AllCoinsAdapter
-import com.example.coinstatsapp.adapter.AllCoinsAdapterDelegate
 import com.example.coinstatsapp.model.CoinModel
 import com.example.coinstatsapp.screen.FavoriteCoinsScreen
 import com.example.coinstatsapp.viewModel.CoinViewModel
-import java.lang.ref.WeakReference
 
-class FavoriteCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
+class FavoriteCoinsFragment : Fragment() {
     private var viewModel: CoinViewModel? = null
     private var screen: FavoriteCoinsScreen? = null
 
@@ -26,19 +24,18 @@ class FavoriteCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
-        viewModel?.configure(requireContext())
+        viewModel?.initModel(requireContext())
         screen?.createRecyclerView(
             AllCoinsAdapter(
                 requireContext(),
                 true,
-                WeakReference(this),
+                null,
                 viewModel?.realmDB?.where(CoinModel::class.java)?.equalTo("isFavorite", true)?.findAll()
             )
         )
-    }
-
-    override fun onFavoriteItemClick(id: String) {
-//        viewModel?.changeFavorite(mode.id)
+        viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
+            screen?.isNoInternetVisible(!it)
+        })
     }
 
     override fun onDestroy() {

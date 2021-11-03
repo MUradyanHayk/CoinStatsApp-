@@ -27,7 +27,8 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
-        viewModel?.configure(requireContext())
+        viewModel?.initModel(requireContext())
+        viewModel?.configureData(requireContext())
         screen?.createRecyclerView(AllCoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.realmDB?.where(CoinModel::class.java)?.findAll()))
 
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {

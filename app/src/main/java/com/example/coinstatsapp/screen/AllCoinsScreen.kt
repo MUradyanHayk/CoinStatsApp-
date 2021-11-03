@@ -19,11 +19,6 @@ open class AllCoinsScreen @JvmOverloads constructor(
     private var recyclerView: RecyclerView? = null
     private var noInternetText: TextView? = null
     var adapter: AllCoinsAdapter? = null
-//    set(value) {
-//        field = value
-//        recyclerView?.adapter = field
-//        field?.notifyDataSetChanged()
-//    }
 
     init {
         setBackgroundColor(ContextCompat.getColor(context, R.color.white))
@@ -46,6 +41,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
         noInternetText = TextView(context)
         isNoInternetVisible(false)
         noInternetText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        noInternetText?.setTextColor(ContextCompat.getColor(context, R.color.gray))
         noInternetText?.text = context.resources.getString(R.string.no_internet_connection_text)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER

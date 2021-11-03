@@ -17,11 +17,13 @@ class CoinViewModel : ViewModel() {
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
 
-    fun configure(context: Context) {
+    fun initModel(context: Context) {
         Realm.init(context)
         realmDB = Realm.getDefaultInstance()
         requestQueue = Volley.newRequestQueue(context)
+    }
 
+    fun configureData(context: Context) {
         clearAllData()
         parseJson(context)
     }
