@@ -45,6 +45,10 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
             screen?.isNoInternetVisible(!it)
         })
+
+        viewModel?.isLoading?.observe(viewLifecycleOwner, {
+            screen?.isProgressBarVisible(it)
+        })
     }
 
     private fun isLastItemDisplayed(recyclerView: RecyclerView): Boolean {

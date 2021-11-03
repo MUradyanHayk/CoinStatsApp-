@@ -18,6 +18,7 @@ class CoinViewModel : ViewModel() {
     private val currency = "EUR"
 
     var hasInternetConnection: MutableLiveData<Boolean> = MutableLiveData()
+    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
 
@@ -49,6 +50,7 @@ class CoinViewModel : ViewModel() {
             return
         }
         hasInternetConnection.value = true
+        isLoading.value = true
 
         val url = NetManager.getBaseUrlWithGivenParameters(pagingSkipCountDefaultValue.toString(), pagingLimitCount.toString(), currency)
         pagingSkipCountDefaultValue += pagingLimitCount
@@ -65,10 +67,11 @@ class CoinViewModel : ViewModel() {
                 coin.imgURL = coins.getJSONObject(i).getString("icon")
                 createCoinObject(coin)
             }
-
+            isLoading.value = false
         }, {
             //onError
             it.printStackTrace()
+            isLoading.value = false
         })
 
         requestQueue?.add(request)

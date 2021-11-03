@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
 
     private var noInternetText: TextView? = null
+    private var progressBar: ProgressBar? = null
     var recyclerView: RecyclerView? = null
     var adapter: CoinsAdapter? = null
 
@@ -26,6 +28,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
         val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         this.layoutParams = params
         createNoInternetText()
+        createProgressBar()
     }
 
     fun createRecyclerView(adapter: CoinsAdapter) {
@@ -52,6 +55,15 @@ open class AllCoinsScreen @JvmOverloads constructor(
         addView(noInternetText)
     }
 
+    private fun createProgressBar() {
+        progressBar = ProgressBar(context)
+        isProgressBarVisible(false)
+        val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        params.gravity = Gravity.CENTER
+        progressBar?.layoutParams = params
+        addView(progressBar)
+    }
+
     fun isNoInternetVisible(isVisible: Boolean) {
         if (isVisible) {
             noInternetText?.visibility = VISIBLE
@@ -59,6 +71,14 @@ open class AllCoinsScreen @JvmOverloads constructor(
         } else {
             noInternetText?.visibility = GONE
             recyclerView?.visibility = VISIBLE
+        }
+    }
+
+    fun isProgressBarVisible(isVisible: Boolean) {
+        if (isVisible) {
+            progressBar?.visibility = VISIBLE
+        } else {
+            progressBar?.visibility = GONE
         }
     }
 }
