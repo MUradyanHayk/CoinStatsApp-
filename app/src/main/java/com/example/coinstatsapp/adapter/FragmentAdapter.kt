@@ -15,8 +15,8 @@ class FragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : 
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            1 -> AllCoinsFragment()
-            2 -> FavoriteCoinsFragment()
+            0 -> AllCoinsFragment()
+            1 -> FavoriteCoinsFragment()
             else -> AllCoinsFragment()
         }
     }
