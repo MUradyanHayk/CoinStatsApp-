@@ -87,8 +87,8 @@ class CoinItem @JvmOverloads constructor(
 
     fun configure(data: CoinData, isFromFavoriteScreen:Boolean) {
         titleTextView?.text = data.name
-        priceTextView?.text = data.price
-        changeFavoriteItemVisibility(!isFromFavoriteScreen)
+        priceTextView?.text = "${data.price}  (${data.currency})"
+                changeFavoriteItemVisibility(!isFromFavoriteScreen)
         logoImageView?.let {
             Glide.with(context).load(data.imgURL).into(it)
         }

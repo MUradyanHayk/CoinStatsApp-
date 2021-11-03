@@ -7,6 +7,7 @@ open class CoinData : RealmObject() {
     var name: String = ""
     var imgURL: String = ""
     var price: String = ""
+    var currency: String = ""
     var isFavorite = false
 
     fun configureData(coinData: CoinData) {
@@ -14,5 +15,6 @@ open class CoinData : RealmObject() {
         this.imgURL = coinData.imgURL
         this.id = coinData.id
         this.price = coinData.price
+        this.currency = coinData.currency
     }
 }

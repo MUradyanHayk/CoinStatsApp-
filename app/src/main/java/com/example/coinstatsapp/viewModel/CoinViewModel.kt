@@ -7,18 +7,19 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.coinstatsapp.constants.Constants
 import com.example.coinstatsapp.manager.NetManager
 import com.example.coinstatsapp.data.CoinData
 import io.realm.Realm
 
 class CoinViewModel : ViewModel() {
     private val pagingLimitCountDefaultValue = 5
-    private var pagingLimitCountMaxValue = pagingLimitCountDefaultValue
+    private var pagingSkipCountDefaultValue = 0
+    private var pagingLimitCount: Int = pagingLimitCountDefaultValue
+    private val currency = "EUR"
+
     var hasInternetConnection: MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
-    var pagingLimitCount: MutableLiveData<Int> = MutableLiveData()
 
     fun initModel(context: Context) {
         Realm.init(context)
@@ -28,18 +29,14 @@ class CoinViewModel : ViewModel() {
 
     fun configureData(context: Context) {
         clearAllData()
-        pagingLimitCount.value = pagingLimitCountDefaultValue
-//        parseJson(context)
+        parseJson(context)
     }
 
-    fun changePagingLimitCount() {
-        val oldPagingLimitCount: Int = pagingLimitCount.value ?: pagingLimitCountDefaultValue
-        if (oldPagingLimitCount + 5 < pagingLimitCountMaxValue) {
-            pagingLimitCount.value = oldPagingLimitCount + 5
-        } else {
-            pagingLimitCount.value = pagingLimitCountMaxValue
-        }
-    }
+//    fun changePagingLimitCount() {
+//        val oldPagingLimitCount: Int = pagingLimitCount.value ?: pagingLimitCountDefaultValue
+//        pagingLimitCount.value = oldPagingLimitCount + 5
+//    }
+
     private fun clearAllData() {
         realmDB?.beginTransaction()
         realmDB?.where(CoinData::class.java)?.findAll()?.deleteAllFromRealm()
@@ -53,17 +50,17 @@ class CoinViewModel : ViewModel() {
         }
         hasInternetConnection.value = true
 
-        val url = NetManager.getBaseUrlWithGivenParameters("0", pagingLimitCount.value.toString(), "EUR")
-
+        val url = NetManager.getBaseUrlWithGivenParameters(pagingSkipCountDefaultValue.toString(), pagingLimitCount.toString(), currency)
+        pagingSkipCountDefaultValue += pagingLimitCount
         val request = JsonObjectRequest(Request.Method.GET, url, null, {
             //onResponse
             val jsonObject = it
             val coin = CoinData()
             val coins = jsonObject.getJSONArray("coins")
-            pagingLimitCountMaxValue = coins.length()
             for (i in 0 until coins.length()) {
                 coin.id = coins.getJSONObject(i).getString("id")
                 coin.price = coins.getJSONObject(i).getString("price")
+                coin.currency = currency
                 coin.name = coins.getJSONObject(i).getString("name")
                 coin.imgURL = coins.getJSONObject(i).getString("icon")
                 createCoinObject(coin)

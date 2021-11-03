@@ -37,16 +37,13 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (isLastItemDisplayed(recyclerView)) {
-                    viewModel?.changePagingLimitCount()
+                    viewModel?.parseJson(requireContext())
                 }
             }
         })
 
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
             screen?.isNoInternetVisible(!it)
-        })
-        viewModel?.pagingLimitCount?.observe(viewLifecycleOwner, {
-            viewModel?.parseJson(requireContext())
         })
     }
 
