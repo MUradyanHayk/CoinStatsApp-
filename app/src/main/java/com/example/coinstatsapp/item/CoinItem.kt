@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
+import androidx.core.view.setPadding
 import com.bumptech.glide.Glide
 import com.example.coinstatsapp.R
 import com.example.coinstatsapp.model.CoinModel
@@ -18,7 +19,8 @@ class CoinItem @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
     private val logoImageViewSize = 50.dp
-    private val favoriteImageViewSize = 20.dp
+    private val itemHeight = 76.dp
+    private val favoriteImageViewSize = 21.dp
     private var logoImageView: ImageView? = null
     private var titleTextView: TextView? = null
     private var priceTextView: TextView? = null
@@ -26,12 +28,11 @@ class CoinItem @JvmOverloads constructor(
     private var titleAndPriceContainer: LinearLayout? = null
 
     init {
-        val params = LayoutParams(LayoutParams.MATCH_PARENT, logoImageViewSize)
-        params.setMargins(12.dp)
+        val params = LayoutParams(LayoutParams.MATCH_PARENT, itemHeight)
+        params.marginStart = 12.dp
         this.layoutParams = params
+        this.setBackgroundResource(R.drawable.rect_click_background)
         createLogoImageView()
-//        createTitleTextView()
-//        createPriceTextView()
         createTitleAndPriceContainer()
         createFavoriteImageView()
     }
@@ -39,6 +40,7 @@ class CoinItem @JvmOverloads constructor(
     private fun createLogoImageView() {
         logoImageView = ImageView(context)
         val params = LayoutParams(logoImageViewSize, logoImageViewSize)
+        params.gravity = Gravity.CENTER_VERTICAL
         logoImageView?.layoutParams = params
         addView(logoImageView)
     }

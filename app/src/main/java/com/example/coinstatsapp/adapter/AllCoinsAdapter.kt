@@ -11,10 +11,15 @@ import io.realm.RealmResults
 import java.lang.ref.WeakReference
 
 interface AllCoinsAdapterDelegate {
-    fun onFavoriteItemClick(id:String)
+    fun onFavoriteItemClick(id: String)
 }
 
-class AllCoinsAdapter(var context: Context, var isFromFavoriteScreen:Boolean, var delegate: WeakReference<AllCoinsAdapterDelegate>?, var list: RealmResults<CoinModel>?) :
+class AllCoinsAdapter(
+    var context: Context,
+    var isFromFavoriteScreen: Boolean,
+    var delegate: WeakReference<AllCoinsAdapterDelegate>?,
+    var list: RealmResults<CoinModel>?
+) :
     RecyclerView.Adapter<ViewHolder>(),
     RealmChangeListener<RealmResults<CoinModel>> {
 
@@ -32,9 +37,11 @@ class AllCoinsAdapter(var context: Context, var isFromFavoriteScreen:Boolean, va
         list?.get(position)?.let {
             itemView.configure(it, isFromFavoriteScreen)
         }
-        itemView.setOnClickListener {
-            val id = list?.get(position)?.id ?: ""
-            delegate?.get()?.onFavoriteItemClick(id)
+        if (!isFromFavoriteScreen) {
+            itemView.setOnClickListener {
+                val id = list?.get(position)?.id ?: ""
+                delegate?.get()?.onFavoriteItemClick(id)
+            }
         }
     }
 

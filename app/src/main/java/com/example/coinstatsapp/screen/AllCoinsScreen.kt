@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.R
 import com.example.coinstatsapp.adapter.AllCoinsAdapter
+import com.example.newprojmvvm.extensions.dp
 
 open class AllCoinsScreen @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -29,11 +30,13 @@ open class AllCoinsScreen @JvmOverloads constructor(
 
     fun createRecyclerView(adapter: AllCoinsAdapter) {
         recyclerView = RecyclerView(context)
+        recyclerView?.setPadding(0, 16.dp, 0, 0)
         val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         recyclerView?.layoutParams = params
         recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView?.adapter = adapter
         this.adapter = adapter
+        recyclerView?.clipToPadding = false
         addView(recyclerView)
     }
 
