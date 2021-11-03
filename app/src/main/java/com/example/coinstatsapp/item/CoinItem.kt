@@ -64,5 +64,10 @@ class CoinItem @JvmOverloads constructor(
         logoImageView?.let {
             Glide.with(context).load(model.imgURL).into(it)
         }
+        if (model.isFavorite) {
+            favoriteImageView?.setImageResource(R.drawable.ic_favorite_fill)
+        } else {
+            favoriteImageView?.setImageResource(R.drawable.ic_favorite_border)
+        }
     }
 }

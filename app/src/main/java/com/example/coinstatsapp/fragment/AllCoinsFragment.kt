@@ -31,7 +31,10 @@ class AllCoinsFragment : Fragment() , AllCoinsAdapterDelegate{
         screen?.createRecyclerView(AllCoinsAdapter(requireContext(), WeakReference(this),viewModel?.realmDB?.where(CoinModel::class.java)?.findAll()))
     }
 
-    override fun onFavoriteItemClick() {
-
+    override fun onFavoriteItemClick(id: String) {
+        if (id.isEmpty()) {
+            return
+        }
+        viewModel?.changeFavorite(id)
     }
 }

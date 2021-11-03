@@ -36,7 +36,7 @@ class FavoriteCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         )
     }
 
-    override fun onFavoriteItemClick() {
-
+    override fun onFavoriteItemClick(id: String) {
+//        viewModel?.changeFavorite(mode.id)
     }
 }

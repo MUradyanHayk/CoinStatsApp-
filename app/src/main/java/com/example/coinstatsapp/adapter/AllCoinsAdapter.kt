@@ -11,7 +11,7 @@ import io.realm.RealmResults
 import java.lang.ref.WeakReference
 
 interface AllCoinsAdapterDelegate {
-    fun onFavoriteItemClick()
+    fun onFavoriteItemClick(id:String)
 }
 
 class AllCoinsAdapter(var context: Context, var delegate: WeakReference<AllCoinsAdapterDelegate>?, var list: RealmResults<CoinModel>?) :
@@ -33,7 +33,8 @@ class AllCoinsAdapter(var context: Context, var delegate: WeakReference<AllCoins
             itemView.configure(it)
         }
         itemView.setOnClickListener {
-            delegate?.get()?.onFavoriteItemClick()
+            val id = list?.get(position)?.id ?: ""
+            delegate?.get()?.onFavoriteItemClick(id)
         }
     }
 

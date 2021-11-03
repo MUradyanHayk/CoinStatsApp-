@@ -50,4 +50,14 @@ class CoinViewModel : ViewModel() {
         coinObject?.initObject(coin)
         realmDB?.commitTransaction()
     }
+
+    fun changeFavorite(id: String) {
+        realmDB?.beginTransaction()
+        val coins = realmDB?.where(CoinModel::class.java)?.equalTo("id", id)?.findAll()
+        if (coins?.first() != null) {
+            coins.first()!!.isFavorite = !coins.first()!!.isFavorite
+        }
+
+        realmDB?.commitTransaction()
+    }
 }

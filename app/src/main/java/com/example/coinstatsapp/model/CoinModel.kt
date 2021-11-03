@@ -11,5 +11,6 @@ open class CoinModel : RealmObject() {
     fun initObject(coinModel: CoinModel) {
         this.name = coinModel.name
         this.imgURL = coinModel.imgURL
+        this.id = coinModel.id
     }
 }
