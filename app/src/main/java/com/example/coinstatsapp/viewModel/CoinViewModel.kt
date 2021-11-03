@@ -18,9 +18,15 @@ class CoinViewModel : ViewModel() {
         Realm.init(context)
         realmDB = Realm.getDefaultInstance()
         requestQueue = Volley.newRequestQueue(context)
-//        realmDB?.where(CoinModel::class.java)?.findAll()?.deleteAllFromRealm()
-//        realmDB?.executeTransaction { realm -> realm.deleteAll() }
+
+        clearAllData()
         parseJson()
+    }
+
+    private fun clearAllData() {
+        realmDB?.beginTransaction()
+        realmDB?.where(CoinModel::class.java)?.findAll()?.deleteAllFromRealm()
+        realmDB?.commitTransaction()
     }
 
     fun parseJson() {
