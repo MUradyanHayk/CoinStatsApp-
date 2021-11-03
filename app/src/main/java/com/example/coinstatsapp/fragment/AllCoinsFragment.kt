@@ -41,4 +41,9 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         }
         viewModel?.changeFavorite(id)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.closeDB()
+    }
 }

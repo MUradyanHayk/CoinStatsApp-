@@ -40,4 +40,9 @@ class FavoriteCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
     override fun onFavoriteItemClick(id: String) {
 //        viewModel?.changeFavorite(mode.id)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.closeDB()
+    }
 }

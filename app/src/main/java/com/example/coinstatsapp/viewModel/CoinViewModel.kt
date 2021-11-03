@@ -76,4 +76,8 @@ class CoinViewModel : ViewModel() {
 
         realmDB?.commitTransaction()
     }
+
+    fun closeDB() {
+        realmDB?.close()
+    }
 }
