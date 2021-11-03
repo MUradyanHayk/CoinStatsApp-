@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.adapter.AllCoinsAdapterDelegate
 import com.example.coinstatsapp.data.CoinData
@@ -31,9 +33,36 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         viewModel?.configureData(requireContext())
         screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.realmDB?.where(CoinData::class.java)?.findAll()))
 
+        screen?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (isLastItemDisplayed(recyclerView)) {
+                    viewModel?.changePagingLimitCount()
+                }
+            }
+        })
+
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
             screen?.isNoInternetVisible(!it)
         })
+        viewModel?.pagingLimitCount?.observe(viewLifecycleOwner, {
+            viewModel?.parseJson(requireContext())
+        })
+    }
+
+    private fun isLastItemDisplayed(recyclerView: RecyclerView): Boolean {
+        val adapter = recyclerView.adapter ?: return false
+        if (adapter.itemCount == 0) {
+            return false
+        }
+
+        val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)?.findLastCompletelyVisibleItemPosition()
+
+        if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == adapter.itemCount - 1) {
+            return true
+        }
+
+        return false
     }
 
     override fun onFavoriteItemClick(id: String) {

@@ -4,8 +4,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import java.util.*
 
 object NetManager {
+    fun getBaseUrlWithGivenParameters(skip: String, limit: String, currency: String): String {
+        return "https://api.coinstats.app/public/v1/coins?skip=$skip&limit=$limit&currency=$currency"
+
+    }
     fun hasInternetConnection(context: Context): Boolean {
         var isConnected = false
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

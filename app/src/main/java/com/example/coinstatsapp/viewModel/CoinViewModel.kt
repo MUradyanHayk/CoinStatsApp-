@@ -13,9 +13,12 @@ import com.example.coinstatsapp.data.CoinData
 import io.realm.Realm
 
 class CoinViewModel : ViewModel() {
-    var hasInternetConnection:  MutableLiveData<Boolean> = MutableLiveData()
+    private val pagingLimitCountDefaultValue = 5
+    private var pagingLimitCountMaxValue = pagingLimitCountDefaultValue
+    var hasInternetConnection: MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
+    var pagingLimitCount: MutableLiveData<Int> = MutableLiveData()
 
     fun initModel(context: Context) {
         Realm.init(context)
@@ -25,9 +28,18 @@ class CoinViewModel : ViewModel() {
 
     fun configureData(context: Context) {
         clearAllData()
-        parseJson(context)
+        pagingLimitCount.value = pagingLimitCountDefaultValue
+//        parseJson(context)
     }
 
+    fun changePagingLimitCount() {
+        val oldPagingLimitCount: Int = pagingLimitCount.value ?: pagingLimitCountDefaultValue
+        if (oldPagingLimitCount + 5 < pagingLimitCountMaxValue) {
+            pagingLimitCount.value = oldPagingLimitCount + 5
+        } else {
+            pagingLimitCount.value = pagingLimitCountMaxValue
+        }
+    }
     private fun clearAllData() {
         realmDB?.beginTransaction()
         realmDB?.where(CoinData::class.java)?.findAll()?.deleteAllFromRealm()
@@ -41,11 +53,14 @@ class CoinViewModel : ViewModel() {
         }
         hasInternetConnection.value = true
 
-        val request = JsonObjectRequest(Request.Method.GET, Constants.BASE_URL, null, {
+        val url = NetManager.getBaseUrlWithGivenParameters("0", pagingLimitCount.value.toString(), "EUR")
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null, {
             //onResponse
             val jsonObject = it
             val coin = CoinData()
             val coins = jsonObject.getJSONArray("coins")
+            pagingLimitCountMaxValue = coins.length()
             for (i in 0 until coins.length()) {
                 coin.id = coins.getJSONObject(i).getString("id")
                 coin.price = coins.getJSONObject(i).getString("price")
