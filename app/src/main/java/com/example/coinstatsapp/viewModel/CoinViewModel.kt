@@ -7,6 +7,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.coinstatsapp.constants.Constants
+import com.example.coinstatsapp.manager.NetManager
 import com.example.coinstatsapp.model.CoinModel
 import io.realm.Realm
 
@@ -20,7 +21,7 @@ class CoinViewModel : ViewModel() {
         requestQueue = Volley.newRequestQueue(context)
 
         clearAllData()
-        parseJson()
+        parseJson(context)
     }
 
     private fun clearAllData() {
@@ -29,7 +30,10 @@ class CoinViewModel : ViewModel() {
         realmDB?.commitTransaction()
     }
 
-    fun parseJson() {
+    fun parseJson(context: Context) {
+        if (NetManager.hasInternetConnection(context)) {
+            return
+        }
         val request = JsonObjectRequest(Request.Method.GET, Constants.BASE_URL, null, {
             //onResponse
             val jsonObject = it
