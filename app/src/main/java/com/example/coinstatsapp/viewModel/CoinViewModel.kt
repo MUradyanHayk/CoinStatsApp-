@@ -1,6 +1,7 @@
 package com.example.coinstatsapp.viewModel
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -12,6 +13,7 @@ import com.example.coinstatsapp.model.CoinModel
 import io.realm.Realm
 
 class CoinViewModel : ViewModel() {
+    var hasInternetConnection:  MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
 
@@ -31,9 +33,12 @@ class CoinViewModel : ViewModel() {
     }
 
     fun parseJson(context: Context) {
-        if (NetManager.hasInternetConnection(context)) {
+        if (!NetManager.hasInternetConnection(context)) {
+            hasInternetConnection.value = false
             return
         }
+        hasInternetConnection.value = true
+
         val request = JsonObjectRequest(Request.Method.GET, Constants.BASE_URL, null, {
             //onResponse
             val jsonObject = it
