@@ -8,11 +8,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import com.bumptech.glide.Glide
 import com.example.coinstatsapp.R
-import com.example.coinstatsapp.model.CoinModel
+import com.example.coinstatsapp.data.CoinData
 import com.example.newprojmvvm.extensions.dp
 
 class CoinItem @JvmOverloads constructor(
@@ -87,14 +85,14 @@ class CoinItem @JvmOverloads constructor(
         addView(favoriteImageView)
     }
 
-    fun configure(model: CoinModel, isFromFavoriteScreen:Boolean) {
-        titleTextView?.text = model.name
-        priceTextView?.text = model.price
+    fun configure(data: CoinData, isFromFavoriteScreen:Boolean) {
+        titleTextView?.text = data.name
+        priceTextView?.text = data.price
         changeFavoriteItemVisibility(!isFromFavoriteScreen)
         logoImageView?.let {
-            Glide.with(context).load(model.imgURL).into(it)
+            Glide.with(context).load(data.imgURL).into(it)
         }
-        if (model.isFavorite) {
+        if (data.isFavorite) {
             favoriteImageView?.setImageResource(R.drawable.ic_favorite_fill)
         } else {
             favoriteImageView?.setImageResource(R.drawable.ic_favorite_border)

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.coinstatsapp.adapter.CoinsAdapter
-import com.example.coinstatsapp.model.CoinModel
+import com.example.coinstatsapp.data.CoinData
 import com.example.coinstatsapp.screen.FavoriteCoinsScreen
 import com.example.coinstatsapp.viewModel.CoinViewModel
 
@@ -30,7 +30,7 @@ class FavoriteCoinsFragment : Fragment() {
                 requireContext(),
                 true,
                 null,
-                viewModel?.realmDB?.where(CoinModel::class.java)?.equalTo("isFavorite", true)?.findAll()
+                viewModel?.realmDB?.where(CoinData::class.java)?.equalTo("isFavorite", true)?.findAll()
             )
         )
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {

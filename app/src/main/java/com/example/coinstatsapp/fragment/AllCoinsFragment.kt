@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.adapter.AllCoinsAdapterDelegate
-import com.example.coinstatsapp.model.CoinModel
+import com.example.coinstatsapp.data.CoinData
 import com.example.coinstatsapp.screen.AllCoinsScreen
 import com.example.coinstatsapp.viewModel.CoinViewModel
 import java.lang.ref.WeakReference
@@ -29,7 +29,7 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
         viewModel?.initModel(requireContext())
         viewModel?.configureData(requireContext())
-        screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.realmDB?.where(CoinModel::class.java)?.findAll()))
+        screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.realmDB?.where(CoinData::class.java)?.findAll()))
 
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
             screen?.isNoInternetVisible(!it)

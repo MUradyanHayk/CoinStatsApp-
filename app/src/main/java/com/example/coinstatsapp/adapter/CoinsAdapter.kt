@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.item.CoinItem
-import com.example.coinstatsapp.model.CoinModel
+import com.example.coinstatsapp.data.CoinData
 import com.example.coinstatsapp.viewHolder.ViewHolder
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
@@ -18,10 +18,10 @@ class CoinsAdapter(
     var context: Context,
     var isFromFavoriteScreen: Boolean,
     var delegate: WeakReference<AllCoinsAdapterDelegate>?,
-    var list: RealmResults<CoinModel>?
+    var list: RealmResults<CoinData>?
 ) :
     RecyclerView.Adapter<ViewHolder>(),
-    RealmChangeListener<RealmResults<CoinModel>> {
+    RealmChangeListener<RealmResults<CoinData>> {
 
     init {
         this.list?.addChangeListener(this)
@@ -49,7 +49,7 @@ class CoinsAdapter(
         return list?.size ?: 0
     }
 
-    override fun onChange(t: RealmResults<CoinModel>) {
+    override fun onChange(t: RealmResults<CoinData>) {
         notifyDataSetChanged()
     }
 }
