@@ -3,4 +3,5 @@
     <string name="all_coins_title_text">All</string>
     <string name="favorite_coins_title_text">Favorite</string>
     <string name="no_internet_connection_text">There is no Internet Connection</string>
+    <string name="no_favorite_item_text">There is no Favorite Items</string>
 </resources>

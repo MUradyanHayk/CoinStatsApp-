@@ -46,6 +46,7 @@ class CoinViewModel : ViewModel() {
             val coins = jsonObject.getJSONArray("coins")
             for (i in 0 until coins.length()) {
                 coin.id = coins.getJSONObject(i).getString("id")
+                coin.price = coins.getJSONObject(i).getString("price")
                 coin.name = coins.getJSONObject(i).getString("name")
                 coin.imgURL = coins.getJSONObject(i).getString("icon")
                 createCoinObject(coin)

@@ -20,14 +20,18 @@ class CoinItem @JvmOverloads constructor(
     private val favoriteImageViewSize = 20.dp
     private var logoImageView: ImageView? = null
     private var titleTextView: TextView? = null
+    private var priceTextView: TextView? = null
     private var favoriteImageView: ImageView? = null
+    private var titleAndPriceContainer: LinearLayout? = null
 
     init {
         val params = LayoutParams(LayoutParams.MATCH_PARENT, logoImageViewSize)
         params.setMargins(12.dp)
         this.layoutParams = params
         createLogoImageView()
-        createTitleTextView()
+//        createTitleTextView()
+//        createPriceTextView()
+        createTitleAndPriceContainer()
         createFavoriteImageView()
     }
 
@@ -42,10 +46,28 @@ class CoinItem @JvmOverloads constructor(
     private fun createTitleTextView() {
         titleTextView = TextView(context)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        params.marginStart = 16.dp + logoImageViewSize
-        params.gravity = Gravity.CENTER_VERTICAL
         titleTextView?.layoutParams = params
-        addView(titleTextView)
+        titleAndPriceContainer?.addView(titleTextView)
+    }
+
+    private fun createPriceTextView() {
+        priceTextView = TextView(context)
+        val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        priceTextView?.layoutParams = params
+        titleAndPriceContainer?.addView(priceTextView)
+    }
+
+    private fun createTitleAndPriceContainer() {
+        titleAndPriceContainer = LinearLayout(context)
+        val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        params.marginStart = 16.dp + logoImageViewSize
+        titleAndPriceContainer?.orientation = LinearLayout.VERTICAL
+        params.gravity = Gravity.CENTER_VERTICAL
+        titleAndPriceContainer?.layoutParams = params
+        addView(titleAndPriceContainer)
+
+        createTitleTextView()
+        createPriceTextView()
     }
 
 
@@ -61,6 +83,7 @@ class CoinItem @JvmOverloads constructor(
 
     fun configure(model: CoinModel) {
         titleTextView?.text = model.name
+        priceTextView?.text = model.price
         logoImageView?.let {
             Glide.with(context).load(model.imgURL).into(it)
         }
