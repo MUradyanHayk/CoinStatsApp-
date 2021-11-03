@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coinstatsapp.R
-import com.example.coinstatsapp.adapter.AllCoinsAdapter
+import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.newprojmvvm.extensions.dp
 
 open class AllCoinsScreen @JvmOverloads constructor(
@@ -19,7 +19,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
 
     private var recyclerView: RecyclerView? = null
     private var noInternetText: TextView? = null
-    var adapter: AllCoinsAdapter? = null
+    var adapter: CoinsAdapter? = null
 
     init {
         setBackgroundColor(ContextCompat.getColor(context, R.color.white))
@@ -28,7 +28,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
         createNoInternetText()
     }
 
-    fun createRecyclerView(adapter: AllCoinsAdapter) {
+    fun createRecyclerView(adapter: CoinsAdapter) {
         recyclerView = RecyclerView(context)
         recyclerView?.setPadding(0, 16.dp, 0, 0)
         val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)

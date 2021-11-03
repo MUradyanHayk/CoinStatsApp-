@@ -14,7 +14,7 @@ interface AllCoinsAdapterDelegate {
     fun onFavoriteItemClick(id: String)
 }
 
-class AllCoinsAdapter(
+class CoinsAdapter(
     var context: Context,
     var isFromFavoriteScreen: Boolean,
     var delegate: WeakReference<AllCoinsAdapterDelegate>?,

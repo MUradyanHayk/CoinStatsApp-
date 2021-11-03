@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.coinstatsapp.adapter.AllCoinsAdapter
+import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.model.CoinModel
 import com.example.coinstatsapp.screen.FavoriteCoinsScreen
 import com.example.coinstatsapp.viewModel.CoinViewModel
@@ -26,7 +26,7 @@ class FavoriteCoinsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
         viewModel?.initModel(requireContext())
         screen?.createRecyclerView(
-            AllCoinsAdapter(
+            CoinsAdapter(
                 requireContext(),
                 true,
                 null,
