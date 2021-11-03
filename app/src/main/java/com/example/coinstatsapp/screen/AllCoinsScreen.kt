@@ -3,8 +3,10 @@ package com.example.coinstatsapp.screen
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coinstatsapp.R
 import com.example.coinstatsapp.adapter.AllCoinsAdapter
 
 class AllCoinsScreen @JvmOverloads constructor(
@@ -20,6 +22,7 @@ class AllCoinsScreen @JvmOverloads constructor(
 //    }
 
     init {
+        setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         this.layoutParams = params
 //        createRecyclerView()
