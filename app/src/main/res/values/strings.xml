@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoinStatsApp</string>
+    <string name="all_coins_title_text">All</string>
+    <string name="favorite_coins_title_text">Favorite</string>
 </resources>
