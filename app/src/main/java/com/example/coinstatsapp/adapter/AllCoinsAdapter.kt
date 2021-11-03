@@ -14,7 +14,7 @@ interface AllCoinsAdapterDelegate {
     fun onFavoriteItemClick(id:String)
 }
 
-class AllCoinsAdapter(var context: Context, var delegate: WeakReference<AllCoinsAdapterDelegate>?, var list: RealmResults<CoinModel>?) :
+class AllCoinsAdapter(var context: Context, var isFromFavoriteScreen:Boolean, var delegate: WeakReference<AllCoinsAdapterDelegate>?, var list: RealmResults<CoinModel>?) :
     RecyclerView.Adapter<ViewHolder>(),
     RealmChangeListener<RealmResults<CoinModel>> {
 
@@ -30,7 +30,7 @@ class AllCoinsAdapter(var context: Context, var delegate: WeakReference<AllCoins
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemView = holder.itemView as CoinItem
         list?.get(position)?.let {
-            itemView.configure(it)
+            itemView.configure(it, isFromFavoriteScreen)
         }
         itemView.setOnClickListener {
             val id = list?.get(position)?.id ?: ""

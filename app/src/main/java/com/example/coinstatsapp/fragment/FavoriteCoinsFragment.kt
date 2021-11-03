@@ -30,6 +30,7 @@ class FavoriteCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         screen?.createRecyclerView(
             AllCoinsAdapter(
                 requireContext(),
+                true,
                 WeakReference(this),
                 viewModel?.realmDB?.where(CoinModel::class.java)?.equalTo("isFavorite", true)?.findAll()
             )

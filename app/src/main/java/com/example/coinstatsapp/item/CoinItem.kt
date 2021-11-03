@@ -74,6 +74,7 @@ class CoinItem @JvmOverloads constructor(
     private fun createFavoriteImageView() {
         favoriteImageView = ImageView(context)
         favoriteImageView?.setImageResource(R.drawable.ic_favorite_border)
+        changeFavoriteItemVisibility(true)
         val params = LayoutParams(favoriteImageViewSize, favoriteImageViewSize)
         params.marginEnd = 16.dp
         params.gravity = Gravity.CENTER or Gravity.END
@@ -81,9 +82,10 @@ class CoinItem @JvmOverloads constructor(
         addView(favoriteImageView)
     }
 
-    fun configure(model: CoinModel) {
+    fun configure(model: CoinModel, isFromFavoriteScreen:Boolean) {
         titleTextView?.text = model.name
         priceTextView?.text = model.price
+        changeFavoriteItemVisibility(!isFromFavoriteScreen)
         logoImageView?.let {
             Glide.with(context).load(model.imgURL).into(it)
         }
@@ -92,5 +94,9 @@ class CoinItem @JvmOverloads constructor(
         } else {
             favoriteImageView?.setImageResource(R.drawable.ic_favorite_border)
         }
+    }
+
+    fun changeFavoriteItemVisibility(isVisible: Boolean) {
+        favoriteImageView?.visibility = if(isVisible) VISIBLE else GONE
     }
 }
