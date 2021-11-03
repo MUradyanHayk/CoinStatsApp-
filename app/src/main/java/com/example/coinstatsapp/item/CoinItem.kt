@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import com.bumptech.glide.Glide
 import com.example.coinstatsapp.R
@@ -47,6 +48,7 @@ class CoinItem @JvmOverloads constructor(
         titleTextView = TextView(context)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         titleTextView?.layoutParams = params
+        titleTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray))
         titleAndPriceContainer?.addView(titleTextView)
     }
 
@@ -54,6 +56,7 @@ class CoinItem @JvmOverloads constructor(
         priceTextView = TextView(context)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         priceTextView?.layoutParams = params
+        priceTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray))
         titleAndPriceContainer?.addView(priceTextView)
     }
 
