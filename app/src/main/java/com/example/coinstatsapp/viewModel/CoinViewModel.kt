@@ -51,11 +51,6 @@ class CoinViewModel : ViewModel() {
         this.isListEmpty.value = isListEmpty
     }
 
-//    fun changePagingLimitCount() {
-//        val oldPagingLimitCount: Int = pagingLimitCount.value ?: pagingLimitCountDefaultValue
-//        pagingLimitCount.value = oldPagingLimitCount + 5
-//    }
-
     private fun clearAllData() {
         realmDB?.beginTransaction()
         realmDB?.where(CoinData::class.java)?.findAll()?.deleteAllFromRealm()

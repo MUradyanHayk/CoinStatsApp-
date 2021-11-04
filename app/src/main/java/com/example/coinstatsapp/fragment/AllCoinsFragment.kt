@@ -45,7 +45,6 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         })
 
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
-//            screen?.isNotItemsTextVisible(!it)
             if (!it) {
                 Toast.makeText(requireContext(), resources.getString(R.string.no_internet_connection_text), Toast.LENGTH_SHORT).show()
             }

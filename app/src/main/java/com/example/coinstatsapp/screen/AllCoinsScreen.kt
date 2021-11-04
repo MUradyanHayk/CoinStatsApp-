@@ -67,10 +67,8 @@ open class AllCoinsScreen @JvmOverloads constructor(
     fun isNotItemsTextVisible(isVisible: Boolean) {
         if (isVisible) {
             notItemsText?.visibility = VISIBLE
-            recyclerView?.visibility = GONE
         } else {
             notItemsText?.visibility = GONE
-            recyclerView?.visibility = VISIBLE
         }
     }
 
