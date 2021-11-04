@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley
 import com.example.coinstatsapp.manager.NetManager
 import com.example.coinstatsapp.data.CoinData
 import io.realm.Realm
+import io.realm.RealmResults
 
 class CoinViewModel : ViewModel() {
     private val pagingLimitCountDefaultValue = 5
@@ -27,6 +28,18 @@ class CoinViewModel : ViewModel() {
         Realm.init(context)
         realmDB = Realm.getDefaultInstance()
         requestQueue = Volley.newRequestQueue(context)
+    }
+
+    fun getFavoriteList(): RealmResults<CoinData>? {
+        val list = realmDB?.where(CoinData::class.java)?.equalTo("isFavorite", true)?.findAll()
+//        setListEmpty(list == null || list.isEmpty())
+        return list
+    }
+
+    fun getAllItemList(): RealmResults<CoinData>? {
+        val list = realmDB?.where(CoinData::class.java)?.findAll()
+//        setListEmpty(list == null || list.isEmpty())
+        return list
     }
 
     fun configureData(context: Context) {
@@ -68,6 +81,7 @@ class CoinViewModel : ViewModel() {
             val jsonObject = it
             val coin = CoinData()
             val coins = jsonObject.getJSONArray("coins")
+//            setListEmpty(coins.length() == 0)
             for (i in 0 until coins.length()) {
                 coin.id = coins.getJSONObject(i).getString("id")
                 coin.price = coins.getJSONObject(i).getString("price")
@@ -99,8 +113,9 @@ class CoinViewModel : ViewModel() {
         if (coins?.first() != null) {
             coins.first()!!.isFavorite = !coins.first()!!.isFavorite
         }
-
         realmDB?.commitTransaction()
+
+//        setListEmpty(coins == null || coins.isEmpty())
     }
 
     fun closeDB() {

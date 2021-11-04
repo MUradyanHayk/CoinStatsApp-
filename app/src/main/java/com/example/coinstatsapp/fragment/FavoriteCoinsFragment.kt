@@ -30,11 +30,11 @@ class FavoriteCoinsFragment : Fragment() {
                 requireContext(),
                 true,
                 null,
-                viewModel?.realmDB?.where(CoinData::class.java)?.equalTo("isFavorite", true)?.findAll()
+                viewModel?.getFavoriteList()
             )
         )
         viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
-            screen?.isNotItemsTextVisible(!it)
+            screen?.isNotItemsTextVisible(it)
         })
     }
 

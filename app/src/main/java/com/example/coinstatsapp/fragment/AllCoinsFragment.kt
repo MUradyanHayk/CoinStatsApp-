@@ -33,7 +33,7 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
         viewModel?.initModel(requireContext())
         viewModel?.configureData(requireContext())
-        screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.realmDB?.where(CoinData::class.java)?.findAll()))
+        screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.getAllItemList()))
 
         screen?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -56,7 +56,7 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         })
 
         viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
-            screen?.isProgressBarVisible(it)
+            screen?.isNotItemsTextVisible(it)
         })
     }
 
