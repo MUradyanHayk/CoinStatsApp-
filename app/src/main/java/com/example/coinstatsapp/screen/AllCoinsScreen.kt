@@ -1,6 +1,7 @@
 package com.example.coinstatsapp.screen
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -46,7 +47,8 @@ open class AllCoinsScreen @JvmOverloads constructor(
     private fun createNoInternetText() {
         notItemsText = TextView(context)
         isNotItemsTextVisible(false)
-        notItemsText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        notItemsText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21f)
+        notItemsText?.typeface = Typeface.DEFAULT_BOLD
         notItemsText?.setTextColor(ContextCompat.getColor(context, R.color.gray))
         notItemsText?.text = context.resources.getString(R.string.no_item_text)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)

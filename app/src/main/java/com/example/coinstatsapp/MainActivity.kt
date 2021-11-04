@@ -1,7 +1,9 @@
 package com.example.coinstatsapp
 
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.coinstatsapp.adapter.FragmentAdapter
 import com.google.android.material.tabs.TabLayout
@@ -14,15 +16,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initViews()
     }
 
     private fun initViews() {
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.blue)))
+        window.statusBarColor = ContextCompat.getColor(this, R.color.blue)
+
         tabLayout = findViewById(R.id.tab_layout_id)
         viewPager = findViewById(R.id.view_pager_id)
         fragmentAdapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager?.adapter = fragmentAdapter
+
+        tabLayout?.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.blue))
+        tabLayout?.setTabTextColors(ContextCompat.getColor(this, R.color.gray), ContextCompat.getColor(this, R.color.blue))
 
         tabLayout?.addTab(tabLayout!!.newTab().setText(resources.getString(R.string.all_coins_title_text)))
         tabLayout?.addTab(tabLayout!!.newTab().setText(resources.getString(R.string.favorite_coins_title_text)))

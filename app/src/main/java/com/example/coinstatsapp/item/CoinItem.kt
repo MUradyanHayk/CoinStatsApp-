@@ -1,6 +1,7 @@
 package com.example.coinstatsapp.item
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
@@ -48,7 +49,8 @@ class CoinItem @JvmOverloads constructor(
         titleTextView = TextView(context)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         titleTextView?.layoutParams = params
-        titleTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray))
+        titleTextView?.typeface = Typeface.DEFAULT_BOLD
+        titleTextView?.setTextColor(ContextCompat.getColor(context, R.color.dark_gray))
         titleAndPriceContainer?.addView(titleTextView)
     }
 
@@ -56,7 +58,7 @@ class CoinItem @JvmOverloads constructor(
         priceTextView = TextView(context)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         priceTextView?.layoutParams = params
-        priceTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray))
+        priceTextView?.setTextColor(ContextCompat.getColor(context, R.color.dark_gray))
         titleAndPriceContainer?.addView(priceTextView)
     }
 
