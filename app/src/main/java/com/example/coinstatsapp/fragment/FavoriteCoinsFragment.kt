@@ -42,4 +42,10 @@ class FavoriteCoinsFragment : Fragment() {
         super.onDestroy()
         viewModel?.closeDB()
     }
+
+    override fun onResume() {
+        super.onResume()
+        val list = screen?.adapter?.list
+        viewModel?.setListEmpty(list == null || list.isEmpty())
+    }
 }
