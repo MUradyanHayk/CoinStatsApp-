@@ -18,6 +18,7 @@ class CoinViewModel : ViewModel() {
     private val currency = "EUR"
 
     var hasInternetConnection: MutableLiveData<Boolean> = MutableLiveData()
+    var isListEmpty: MutableLiveData<Boolean> = MutableLiveData()
     var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
@@ -29,8 +30,16 @@ class CoinViewModel : ViewModel() {
     }
 
     fun configureData(context: Context) {
+        if (!NetManager.hasInternetConnection(context)) {
+            hasInternetConnection.value = false
+            return
+        }
         clearAllData()
         parseJson(context)
+    }
+
+    fun setListEmpty(isListEmpty:Boolean) {
+        this.isListEmpty.value = isListEmpty
     }
 
 //    fun changePagingLimitCount() {

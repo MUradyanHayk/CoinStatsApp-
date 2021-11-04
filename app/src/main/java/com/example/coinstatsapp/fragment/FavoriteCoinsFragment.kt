@@ -33,8 +33,8 @@ class FavoriteCoinsFragment : Fragment() {
                 viewModel?.realmDB?.where(CoinData::class.java)?.equalTo("isFavorite", true)?.findAll()
             )
         )
-        viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
-            screen?.isNoInternetVisible(!it)
+        viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
+            screen?.isNotItemsTextVisible(!it)
         })
     }
 

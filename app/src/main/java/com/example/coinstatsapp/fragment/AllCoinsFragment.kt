@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coinstatsapp.R
 import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.adapter.AllCoinsAdapterDelegate
 import com.example.coinstatsapp.data.CoinData
@@ -43,10 +45,17 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
         })
 
         viewModel?.hasInternetConnection?.observe(viewLifecycleOwner, {
-            screen?.isNoInternetVisible(!it)
+//            screen?.isNotItemsTextVisible(!it)
+            if (!it) {
+                Toast.makeText(requireContext(), resources.getString(R.string.no_internet_connection_text), Toast.LENGTH_SHORT).show()
+            }
         })
 
         viewModel?.isLoading?.observe(viewLifecycleOwner, {
+            screen?.isProgressBarVisible(it)
+        })
+
+        viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
             screen?.isProgressBarVisible(it)
         })
     }

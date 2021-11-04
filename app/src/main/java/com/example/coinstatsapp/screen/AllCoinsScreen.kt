@@ -18,7 +18,7 @@ open class AllCoinsScreen @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    private var noInternetText: TextView? = null
+    private var notItemsText: TextView? = null
     private var progressBar: ProgressBar? = null
     var recyclerView: RecyclerView? = null
     var adapter: CoinsAdapter? = null
@@ -43,16 +43,16 @@ open class AllCoinsScreen @JvmOverloads constructor(
         addView(recyclerView)
     }
 
-    fun createNoInternetText() {
-        noInternetText = TextView(context)
-        isNoInternetVisible(false)
-        noInternetText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        noInternetText?.setTextColor(ContextCompat.getColor(context, R.color.gray))
-        noInternetText?.text = context.resources.getString(R.string.no_internet_connection_text)
+    private fun createNoInternetText() {
+        notItemsText = TextView(context)
+        isNotItemsTextVisible(false)
+        notItemsText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        notItemsText?.setTextColor(ContextCompat.getColor(context, R.color.gray))
+        notItemsText?.text = context.resources.getString(R.string.no_item_text)
         val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER
-        noInternetText?.layoutParams = params
-        addView(noInternetText)
+        notItemsText?.layoutParams = params
+        addView(notItemsText)
     }
 
     private fun createProgressBar() {
@@ -64,12 +64,12 @@ open class AllCoinsScreen @JvmOverloads constructor(
         addView(progressBar)
     }
 
-    fun isNoInternetVisible(isVisible: Boolean) {
+    fun isNotItemsTextVisible(isVisible: Boolean) {
         if (isVisible) {
-            noInternetText?.visibility = VISIBLE
+            notItemsText?.visibility = VISIBLE
             recyclerView?.visibility = GONE
         } else {
-            noInternetText?.visibility = GONE
+            notItemsText?.visibility = GONE
             recyclerView?.visibility = VISIBLE
         }
     }
