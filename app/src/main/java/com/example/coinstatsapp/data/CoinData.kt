@@ -9,7 +9,6 @@ open class CoinData : RealmObject() {
     var price: String = ""
     var currency: String = ""
     var isFavorite = false
-    var favoriteCoins = mutableMapOf<String, Boolean>()
 
     fun configureData(coinData: CoinData) {
         this.name = coinData.name
