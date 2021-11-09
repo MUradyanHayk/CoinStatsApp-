@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coinstatsapp.MainActivity
 import com.example.coinstatsapp.R
 import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.adapter.AllCoinsAdapterDelegate
@@ -30,9 +31,7 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
-        viewModel?.initModel(requireContext())
-        viewModel?.configureData(requireContext())
+        viewModel = (activity as MainActivity).viewModel
         screen?.createRecyclerView(CoinsAdapter(requireContext(), false, WeakReference(this), viewModel?.getAllItemList()))
 
         screen?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -79,10 +78,5 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
             return
         }
         viewModel?.changeFavorite(id)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel?.closeDB()
     }
 }

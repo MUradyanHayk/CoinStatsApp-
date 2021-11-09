@@ -24,9 +24,8 @@ class CoinViewModel : ViewModel() {
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
 
-    fun initModel(context: Context) {
-        Realm.init(context)
-        realmDB = Realm.getDefaultInstance()
+    fun initModel(context: Context, realmDB: Realm?) {
+        this.realmDB = realmDB
         requestQueue = Volley.newRequestQueue(context)
     }
 
@@ -47,7 +46,7 @@ class CoinViewModel : ViewModel() {
         parseJson(context)
     }
 
-    fun setListEmpty(isListEmpty:Boolean) {
+    fun setListEmpty(isListEmpty: Boolean) {
         this.isListEmpty.value = isListEmpty
     }
 
@@ -104,9 +103,5 @@ class CoinViewModel : ViewModel() {
             coins.first()!!.isFavorite = !coins.first()!!.isFavorite
         }
         realmDB?.commitTransaction()
-    }
-
-    fun closeDB() {
-        realmDB?.close()
     }
 }

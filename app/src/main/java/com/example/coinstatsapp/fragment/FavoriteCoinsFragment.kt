@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.coinstatsapp.MainActivity
 import com.example.coinstatsapp.adapter.CoinsAdapter
 import com.example.coinstatsapp.data.CoinData
 import com.example.coinstatsapp.screen.FavoriteCoinsScreen
@@ -23,8 +24,7 @@ class FavoriteCoinsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CoinViewModel::class.java)
-        viewModel?.initModel(requireContext())
+        viewModel = (activity as MainActivity).viewModel
         screen?.createRecyclerView(
             CoinsAdapter(
                 requireContext(),
@@ -36,11 +36,6 @@ class FavoriteCoinsFragment : Fragment() {
         viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
             screen?.isNotItemsTextVisible(it)
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel?.closeDB()
     }
 
     override fun onResume() {
