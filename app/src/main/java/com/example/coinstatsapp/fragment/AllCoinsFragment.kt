@@ -53,7 +53,7 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
             screen?.isProgressBarVisible(it)
         })
 
-        viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
+        viewModel?.isAllListEmpty?.observe(viewLifecycleOwner, {
             screen?.isNotItemsTextVisible(it)
         })
     }
@@ -78,5 +78,11 @@ class AllCoinsFragment : Fragment(), AllCoinsAdapterDelegate {
             return
         }
         viewModel?.changeFavorite(id)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val list = screen?.adapter?.list
+        viewModel?.setAllListEmpty(list == null || list.isEmpty())
     }
 }

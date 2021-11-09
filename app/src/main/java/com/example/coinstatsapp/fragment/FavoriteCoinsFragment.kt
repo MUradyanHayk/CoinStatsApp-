@@ -33,7 +33,7 @@ class FavoriteCoinsFragment : Fragment() {
                 viewModel?.getFavoriteList()
             )
         )
-        viewModel?.isListEmpty?.observe(viewLifecycleOwner, {
+        viewModel?.isFavoriteListEmpty?.observe(viewLifecycleOwner, {
             screen?.isNotItemsTextVisible(it)
         })
     }
@@ -41,6 +41,6 @@ class FavoriteCoinsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val list = screen?.adapter?.list
-        viewModel?.setListEmpty(list == null || list.isEmpty())
+        viewModel?.setFavoriteListEmpty(list == null || list.isEmpty())
     }
 }

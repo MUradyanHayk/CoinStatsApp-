@@ -19,7 +19,8 @@ class CoinViewModel : ViewModel() {
     private val currency = "EUR"
 
     var hasInternetConnection: MutableLiveData<Boolean> = MutableLiveData()
-    var isListEmpty: MutableLiveData<Boolean> = MutableLiveData()
+    var isAllListEmpty: MutableLiveData<Boolean> = MutableLiveData()
+    var isFavoriteListEmpty: MutableLiveData<Boolean> = MutableLiveData()
     var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     var realmDB: Realm? = null
     var requestQueue: RequestQueue? = null
@@ -46,8 +47,13 @@ class CoinViewModel : ViewModel() {
         parseJson(context)
     }
 
-    fun setListEmpty(isListEmpty: Boolean) {
-        this.isListEmpty.value = isListEmpty
+    fun setAllListEmpty(isListEmpty: Boolean) {
+        this.isAllListEmpty.value = isListEmpty
+    }
+
+
+    fun setFavoriteListEmpty(isListEmpty: Boolean) {
+        this.isFavoriteListEmpty.value = isListEmpty
     }
 
     private fun clearAllData() {
@@ -80,6 +86,7 @@ class CoinViewModel : ViewModel() {
                 createCoinObject(coin)
             }
             isLoading.value = false
+            setAllListEmpty(coins.length() == 0)
         }, {
             //onError
             it.printStackTrace()
